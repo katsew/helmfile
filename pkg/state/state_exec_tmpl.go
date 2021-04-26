@@ -95,6 +95,9 @@ func (st *HelmState) ExecuteTemplates() (*HelmState, error) {
 		for k, v := range st.CommonLabels {
 			rt.Labels[k] = v
 		}
+
+		// To render template with correct(overrides) .Release data, call ApplyOverrides here.
+		st.ApplyOverrides(&rt)
 		successFlag := false
 		for it, prev := 0, &rt; it < 6; it++ {
 			tmplData := st.createReleaseTemplateData(prev, vals)
