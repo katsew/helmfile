@@ -43,7 +43,7 @@ func TestHelmState_executeTemplates(t *testing.T) {
 				Chart:     "test-charts/test-app",
 				Version:   "test-app-0.1",
 				Name:      "test-app",
-				Namespace: "test-namespace-test-app",
+				Namespace: "test-namespace_",
 				Values:    []interface{}{"config/test_env/test-app/values.yaml"},
 				Secrets:   []interface{}{"config/test_env/test-app/secrets.yaml"},
 				Labels:    map[string]string{"id": "test-app"},
@@ -59,8 +59,8 @@ func TestHelmState_executeTemplates(t *testing.T) {
 			},
 			want: ReleaseSpec{
 				Chart:     "test-chart",
-				Name:      "test-chart-dev",
-				Namespace: "dev",
+				Name:      "test-chart-test-namespace_",
+				Namespace: "test-namespace_",
 				Labels:    map[string]string{"id": "test-chart"},
 			},
 		},
@@ -80,7 +80,7 @@ func TestHelmState_executeTemplates(t *testing.T) {
 			want: ReleaseSpec{
 				Chart:      "test-chart",
 				Name:       "app-dev",
-				Namespace:  "dev",
+				Namespace:  "test-namespace_",
 				Labels:     map[string]string{"id": "app"},
 				Installed:  func(i bool) *bool { return &i }(true),
 				Verify:     func(i bool) *bool { return &i }(true),
@@ -103,7 +103,7 @@ func TestHelmState_executeTemplates(t *testing.T) {
 			want: ReleaseSpec{
 				Chart:     "test-charts/chart",
 				Name:      "test-app",
-				Namespace: "dev",
+				Namespace: "test-namespace_",
 				SetValues: []SetValue{
 					SetValue{Name: "val1", Value: "test-app-val1"},
 					SetValue{Name: "val2", File: "test-app.yml"},
@@ -124,7 +124,7 @@ func TestHelmState_executeTemplates(t *testing.T) {
 				Chart:     "test-charts/chart",
 				Verify:    nil,
 				Name:      "app",
-				Namespace: "dev",
+				Namespace: "test-namespace_",
 				Values:    []interface{}{map[interface{}]interface{}{"key": "app-val0"}},
 			},
 		},
