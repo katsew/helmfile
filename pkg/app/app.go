@@ -225,7 +225,7 @@ func (a *App) Diff(c DiffConfigProvider) error {
 
 func (a *App) Template(c TemplateConfigProvider) error {
 
-	opts := []LoadOption{SetRetainValuesFiles(c.SkipCleanup())}
+	opts := []LoadOption{SetRetainValuesFiles(c.SkipCleanup()), SetFilter(true)}
 
 	return a.ForEachState(func(run *Run) (ok bool, errs []error) {
 		includeCRDs := c.IncludeCRDs()
